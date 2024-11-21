@@ -75,7 +75,9 @@ namespace TextBasedRolePlayGame
 
             Console.WriteLine($"{boss.CoinReward} coins received");
 
-            mainCharacter.XP 
+            mainCharacter.XP += boss.XPReward;
+
+            Console.WriteLine($"{boss.XPReward} xp received");
         }
     }
 }

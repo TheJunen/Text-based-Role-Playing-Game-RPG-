@@ -11,9 +11,9 @@ namespace TextBasedRolePlayGame
     {
         public List<Item> shopItems { get; private set; } = new List<Item>
         {
-                new Sword("Sword lvl 1", 10, 10, "Level 1 sword"),
-                new Shield("Shield lvl 1", 10, 10, "Level 1 shield"),
-                new Healer("Healer lvl 1", 10, 10, "Level 1 healer")
+                new Sword("Sword lvl 1", 10, 20, "Level 1 sword"),
+                new Shield("Shield lvl 1", 10, 20, "Level 1 shield"),
+                new Healer("Healer lvl 1", 10, 20, "Level 1 healer")
         };
 
         internal void VisitShop(MainCharacter mainCharacter)
@@ -29,7 +29,7 @@ namespace TextBasedRolePlayGame
                     item.WriteOutInfo();
                 }
 
-                Console.WriteLine($"Main character's money: {mainCharacter.Coins}");
+                Console.WriteLine($"{mainCharacter.Name}'s coins: {mainCharacter.Coins}");
 
                 Console.WriteLine("Write 1 to buy nr 1 from list, 2 for nr 2 etc");
 
@@ -41,6 +41,10 @@ namespace TextBasedRolePlayGame
                     mainCharacter.AddItemToInventory(shopItems[choice]);
                     Console.WriteLine($"The buy of {shopItems[choice].Name} was successful and {shopItems[choice].Price} was deducted." +
                         $" Item {shopItems[choice].Name} was added to {mainCharacter.Name}'s inventory. The balance is {mainCharacter.Coins}.");
+                }
+                else
+                {
+                    Console.WriteLine($"{mainCharacter.Name} don't have enough coins. Balance is {mainCharacter.Coins} coins. {shopItems[choice].Name} cost {shopItems[choice].Price} coins.");
                 }
 
                 Console.WriteLine("Write 1 to continue shopping, 2 to quit");

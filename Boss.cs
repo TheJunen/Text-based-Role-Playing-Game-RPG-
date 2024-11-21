@@ -13,14 +13,17 @@ namespace TextBasedRolePlayGame
         public int AttackPower { get; private set; }
         public int DefensePower { get; private set; }
         public int CoinReward { get; private set; }
+        public int XPReward { get; private set; }
         public string Description { get; private set; }
 
-        public Boss(string name, int hp, int attackPower, int defensePower, string description)
+        public Boss(string name, int hp, int attackPower, int defensePower, int coinReward, int xPReward, string description)
         {
             Name = name;
             HP = hp;
             AttackPower = attackPower;
             DefensePower = defensePower;
+            CoinReward = coinReward;
+            XPReward = xPReward;
             Description = description;
         }
     }

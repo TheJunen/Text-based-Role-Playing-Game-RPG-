@@ -9,6 +9,9 @@ namespace TextBasedRolePlayGame
 {
     internal class GameLogic
     {
+        public double StoryPercentBar {  get; set; }
+        public int numberOfBosses { get; set; } = 3;
+
         internal void BossFightSimulator(MainCharacter mainCharacter, Boss boss)
         {
             if (mainCharacter == null)
@@ -19,6 +22,22 @@ namespace TextBasedRolePlayGame
             if (boss == null)
             {
                 throw new ArgumentNullException(nameof(boss), "Boss cannot be null");
+            }
+
+            if (boss.Level == 1)
+            {
+                boss.RandomStatsForBossLvl1(boss);
+                Console.WriteLine($"{boss.Name} stats: Attack: {boss.AttackPower}, Defense: {boss.DefensePower}");
+            }
+            else if (boss.Level == 2)
+            {
+                boss.RandomStatsForBossLvl2(boss);
+                Console.WriteLine($"{boss.Name} stats: Attack: {boss.AttackPower}, Defense: {boss.DefensePower}");
+            }
+            else
+            {
+                boss.RandomStatsForBossLvl3(boss);
+                Console.WriteLine($"{boss.Name} stats: Attack: {boss.AttackPower}, Defense: {boss.DefensePower}");
             }
 
             int effectiveAttackPowerOnBoss = mainCharacter.AttackPower - boss.DefensePower;
@@ -37,6 +56,16 @@ namespace TextBasedRolePlayGame
                 if (boss.HP == 0)
                 {
                     Console.WriteLine($"{boss.Name} died and the fight ended");
+
+                    if (boss.Defeated == false)
+                    {
+                        boss.Defeated = true;
+                        AddStoryPercentage();
+                    }
+                    else
+                    {
+                        Console.WriteLine("You have already defeated this boss. Story percentage remains the same.");
+                    }
                     break;
                 }
 
@@ -48,7 +77,7 @@ namespace TextBasedRolePlayGame
 
                 if (mainCharacter.HP == 0)
                 {
-                    Console.WriteLine($"{mainCharacter.Name} died and the fight ended. Write 1 to continue to fight, 2 to end.");
+                    Console.WriteLine($"{mainCharacter.Name} died and the fight ended. Write 1 to restart the fight, 2 to end.");
                     
                     if (Console.ReadLine() == "2")
                     {
@@ -78,6 +107,12 @@ namespace TextBasedRolePlayGame
             mainCharacter.XP += boss.XPReward;
 
             Console.WriteLine($"{boss.XPReward} xp received");
+        }
+
+        private void AddStoryPercentage()
+        {
+            double percentPerBoss = 100.0 / numberOfBosses;
+            StoryPercentBar += percentPerBoss;
         }
     }
 }

@@ -23,12 +23,5 @@ namespace TextBasedRolePlayGame.Items
         }
 
         internal abstract void WriteOutInfo();
-        internal void EquipItem(MainCharacter mainCharacter, Item item)
-        {
-            if (item is Healer)
-            {
-                item.HP 
-            }
-        }
     }
 }

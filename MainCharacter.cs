@@ -11,7 +11,7 @@ namespace TextBasedRolePlayGame
 {
     internal class MainCharacter
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public int HP { get; set; } //må bruke properties og lære meg det. Les chatgpt historikk og yt videoer
         public int Level { get; private set; }
         public int AttackPower { get; set; }
@@ -22,9 +22,8 @@ namespace TextBasedRolePlayGame
         public List<Item> ItemsEquipped { get; private set; }
 
 
-        public MainCharacter(string name, int hp, int level, int attackPower, int defensePower)
+        public MainCharacter(int hp, int level, int attackPower, int defensePower)
         {
-            Name = name;
             HP = hp;
             Level = level;
             AttackPower = attackPower;
@@ -33,16 +32,18 @@ namespace TextBasedRolePlayGame
             ItemsEquipped = new List<Item>();
         }
 
-        internal void EquipItemsFromInventory(MainCharacter mainCharacter, Item item) //siden listen ligger i MainCharacter, så lages metoden her
+        internal void EquipItemsFromInventory(MainCharacter mainCharacter) //siden listen ligger i MainCharacter, så lages metoden her
         {
             bool running = true;
             while (running)
             {
-                WriteOutInventory();
+                PrintOutInventory();
 
                 Console.WriteLine("Write 1 to equip nr 1 from list, 2 for nr 2 etc.");
                 int answer = Convert.ToInt32(Console.ReadLine()) - 1;
-                ItemsEquipped.Add(Inventory[answer]);
+                var item = Inventory[answer];
+                Inventory.Remove(item);
+                ItemsEquipped.Add(item);
 
                 if (item is Healer)
                 {
@@ -59,8 +60,42 @@ namespace TextBasedRolePlayGame
 
                 Console.WriteLine($"{Inventory[answer].Name} equipped. Write 1 to equip one more item, 2 to exit");
 
-                string answerquitapplication = Console.ReadLine();
-                if (answerquitapplication == "2")
+                string answerQuitMethod = Console.ReadLine();
+                if (answerQuitMethod == "2")
+                    running = false;
+            }
+        }
+
+        internal void RemoveEquippedItems(MainCharacter mainCharacter) //removes chosen equipped items. You can only remove 1 items at once, but can run it mulitplie times.
+        {
+            bool running = true;
+            while (running)
+            {
+                PrintOutEquippedItems();
+
+                Console.WriteLine("Write 1 to remove nr 1 from list, 2 for nr 2 etc.");
+                int answer = Convert.ToInt32(Console.ReadLine()) - 1;
+                var item = ItemsEquipped[answer];
+                ItemsEquipped.Remove(item);
+                Inventory.Add(item);
+
+                if (item is Healer)
+                {
+                    mainCharacter.HP += item.HP;
+                }
+                else if (item is Shield)
+                {
+                    mainCharacter.DefensePower += item.DefensePower;
+                }
+                else if (item is Sword)
+                {
+                    mainCharacter.AttackPower += item.AttackPower;
+                }
+
+                Console.WriteLine($"{item.Name} removed. Write 1 to remove one more item, 2 to exit");
+
+                string answerQuitMethod = Console.ReadLine();
+                if (answerQuitMethod == "2")
                     running = false;
             }
         }
@@ -70,9 +105,9 @@ namespace TextBasedRolePlayGame
             Inventory.Add(item);
         }
 
-        private void WriteOutInventory()
+        internal void PrintOutInventory()
         {
-            foreach(var item in Inventory)
+            foreach (var item in Inventory)
             {
                 item.WriteOutInfo();
             }
@@ -118,12 +153,14 @@ namespace TextBasedRolePlayGame
             Level += 1;
         }
 
-        //internal void EquippedItems()//
-        //{
-        //    foreach (var item in ItemsEquipped)
-        //    {
-        //        //item.EquippItem()
-        //    }
-        //}
+        internal void PrintOutEquippedItems()
+        {
+            Console.WriteLine("Items equipped:");
+            foreach (var item in ItemsEquipped)
+            {
+                item.WriteOutInfo();
+            }
+        }
+
     }
 }

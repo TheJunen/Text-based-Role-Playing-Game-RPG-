@@ -29,7 +29,7 @@ namespace TextBasedRolePlayGame
             Description = description;
         }
 
-        internal void RandomStatsForBossLvl1(Boss boss)
+        internal void RandomStatsForBossLvl1(Boss boss) //gives random attack and defense stats between 3-6 for each boss fight 
         {
             boss.AttackPower = rand.Next(3, 7);
             boss.DefensePower = rand.Next(3, 7);
@@ -37,14 +37,14 @@ namespace TextBasedRolePlayGame
 
         internal void RandomStatsForBossLvl2(Boss boss)
         {
-            boss.AttackPower = rand.Next(5, 9);
-            boss.DefensePower = rand.Next(5, 9);
+            boss.AttackPower = rand.Next(60, 81);
+            boss.DefensePower = rand.Next(60, 81);
         }
 
         internal void RandomStatsForBossLvl3(Boss boss)
         {
-            boss.AttackPower = rand.Next(6, 14);
-            boss.DefensePower = rand.Next(6, 14);
+            boss.AttackPower = rand.Next(81, 101);
+            boss.DefensePower = rand.Next(81, 101);
         }
     }
 }

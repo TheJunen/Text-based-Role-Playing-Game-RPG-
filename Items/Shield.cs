@@ -20,7 +20,7 @@ namespace TextBasedRolePlayGame.Items
 
         internal override void WriteOutInfo()
         {
-            Console.WriteLine($"Name: {Name}, Defense Power: {DefensePower}, Price: {Price}, Description: {Description}");
+            Console.WriteLine($"Name: {Name}, Defense Power: {DefensePower}, Price: {Price} coins, Description: {Description}");
         }
 
 
